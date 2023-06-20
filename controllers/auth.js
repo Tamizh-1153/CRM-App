@@ -77,7 +77,7 @@ const forgotPassword = async (req, res) => {
       }
     })
 
-    res.send(resetLink)
+    res.json({status:'ok',resetLink})
   } catch (err) {
     res.send(err)
   }
