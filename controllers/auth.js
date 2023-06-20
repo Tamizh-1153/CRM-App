@@ -51,7 +51,7 @@ const forgotPassword = async (req, res) => {
     const token = user.generateJWT()
     user.token=token
     await user.save()
-    const resetLink = `http://localhost:5000/api/v1/reset_password/${user._id}/${token}`
+    const resetLink = `https://crm-backend-frz0.onrender.com/api/v1/reset_password/${user._id}/${token}`
     console.log(resetLink);
 
     var transporter = nodemailer.createTransport({
