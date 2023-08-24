@@ -2,7 +2,14 @@ const mongoose = require("mongoose")
 
 const serviceRequestSchema = new mongoose.Schema(
   {
-    serviceRequest: {
+    name:{
+      type:String,
+      required:true
+    },
+    assignEmp:{
+      type:String,
+    },
+    type: {
       type: String,
       enum: [
         "created",
@@ -25,7 +32,14 @@ const serviceRequestSchema = new mongoose.Schema(
 
 const leadsSchema = new mongoose.Schema(
   {
-    leads: {
+    name: {
+      type: String,
+      required: true,
+    },
+    assignEmp: {
+      type: String,
+    },
+    type: {
       type: String,
       enum: ["new", "contacted", "qualified", "lost", "cancelled", "confirmed"],
       default: "new",
@@ -41,9 +55,12 @@ const leadsSchema = new mongoose.Schema(
 
 const contactsSchema = new mongoose.Schema(
   {
-    contacts: {
+    name: {
       type: String,
       required: true,
+    },
+    assignEmp: {
+      type: String,
     },
     createdBy: {
       type: mongoose.Types.ObjectId,

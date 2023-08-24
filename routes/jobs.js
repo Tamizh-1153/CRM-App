@@ -19,12 +19,14 @@ const {
   updateServiceRequest,
   updateLead,
   updateContact,
-  getAllInfo
+  getAllInfo,
+  getAllEmployees
 } = require("../controllers/jobs")
 
 //router.route("/").post(createJob).get(getAllJobs)
 //router.route("/:id").get(getJob).delete(deleteJob).patch(updateJob)
 router.route('/all').get(getAllInfo)
+router.route('/all-employees').get(getAllEmployees)
 router.route('/sr').post(createServiceRequest).get(getAllServiceRequest)
 router.route('/ld').post(createLeads).get(getAllLeads)
 router.route('/cts').post(createContacts).get(getAllContacts)

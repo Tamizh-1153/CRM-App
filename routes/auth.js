@@ -9,4 +9,5 @@ router.post('/login',login)
 router.post('/forgotPassword',forgotPassword)
 router.post('/resetPassword/:id/:token',resetPassword)
 
+
 module.exports=router

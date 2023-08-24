@@ -1,11 +1,9 @@
-const {  NotFoundError } = require("../errors")
+const { NotFoundError } = require("../errors")
 const { ServiceRequest, Leads, Contacts } = require("../models/Job")
+const  User  = require('../models/User')
 const { StatusCodes } = require("http-status-codes")
 
-
-
 const createServiceRequest = async (req, res) => {
-  console.log(req.user)
   if (req.user.role == "junior employee") {
     return res.send("Authorization denied")
   }
@@ -35,14 +33,13 @@ const createContacts = async (req, res) => {
 }
 
 const getAllServiceRequest = async (req, res) => {
-  console.log(req.user)
+  const fUser=req.user.role
   const serviceRequests = await ServiceRequest.find({
     createdBy: req.user.userId,
   }).sort("createdAt")
-  console.log(serviceRequests)
   res
     .status(StatusCodes.OK)
-    .json({ serviceRequests, count: serviceRequests.length })
+    .json({fUser, serviceRequests, count: serviceRequests.length })
 }
 
 const getAllLeads = async (req, res) => {
@@ -232,15 +229,25 @@ const getAllInfo = async (req, res) => {
   )
   const leads = await Leads.find({ createdBy: userId }).sort("createdAt")
   const contacts = await Contacts.find({ createdBy: userId }).sort("createdAt")
-  const data={
+  const data = {
     serviceRequests,
     leads,
     contacts,
   }
-  res.status(StatusCodes.OK).json({ data, srCount: serviceRequests.length,ldCount:leads.length,ctsCount:contacts.length })
+  res.status(StatusCodes.OK).json({
+    data,
+    srCount: serviceRequests.length,
+    ldCount: leads.length,
+    ctsCount: contacts.length,
+  })
 }
 
-
+const getAllEmployees = async (req, res) => {
+  const allEmployees = await User.find({
+    $or: [{ role: "junior employee" }, { role: "senior employee" }],
+  })
+  res.json({allEmployees})
+}
 
 module.exports = {
   createServiceRequest,
@@ -258,5 +265,6 @@ module.exports = {
   updateServiceRequest,
   updateLead,
   updateContact,
-  getAllInfo
+  getAllInfo,
+  getAllEmployees
 }
